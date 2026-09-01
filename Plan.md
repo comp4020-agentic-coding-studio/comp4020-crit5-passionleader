@@ -69,9 +69,21 @@ has a focused automated test.
 
 ## Design direction
 
+Named inspiration: SEGA's arcade *Wonder Boy* — its tropical/jungle push to
+the right, fruit scattered along the path, and chunky, saturated 16-bit
+silhouettes set the mood for this prototype. Take the mood, not the IP: no
+copied character art, logo, or box art from the original game — ship an
+original look that reads the same way, the same discipline crit4 applied to
+being "inspired by Logic Pro" without copying its branding.
+
 Classic 16-bit-era arcade run-and-gun aesthetic: chunky pixel sprites, a
 scrolling tiled background, a visible HUD (lives, score, current weapon), and
 punchy, readable feedback for hits, pickups, and deaths (flash/shake on hit,
 a clear pickup pop for fruit and the gun). Keep the screen legible at a
 glance — monster, player, and projectiles should be instantly distinguishable
 by silhouette and colour, not just by label.
+
+Source free/open-licence sprites, tiles, and audio (BGM and SFX) rather than
+drawing or synthesising a full custom asset set from scratch, wherever a
+sourced asset makes a scene noticeably better than a placeholder would.
+Record each asset's origin and licence in `public/assets/CREDITS.md`.

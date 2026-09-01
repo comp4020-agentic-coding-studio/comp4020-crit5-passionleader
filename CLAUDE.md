@@ -13,6 +13,25 @@ The
 publishes this deliverable's brief and spec, and this repo's name tells you
 which deliverable applies. Read both before you plan or build.
 
+## Design motif
+
+`Plan.md` is the design authority for this crit — read it before touching
+scope, and update it first if a change would expand the core idea.
+
+Named inspiration: SEGA's arcade *Wonder Boy* — its tropical/jungle push to
+the right, fruit scattered along the path, and chunky, saturated 16-bit
+silhouettes set the mood. Take the mood, not the IP: no copied character art,
+logo, or box art from the original game — ship an original look that reads
+the same way, the same discipline crit4 applied to being "inspired by Logic
+Pro" without copying its branding.
+
+Reach for free/open-licence sprites, tiles, and audio (BGM and SFX) wherever
+one makes a scene noticeably better than a hand-rolled placeholder would —
+this is a visual- and audio-rich week, not a minimalism exercise. Record every
+sourced asset's origin and licence in `public/assets/CREDITS.md` next to the
+files themselves, so the licence terms travel with the asset even when it's
+CC0 and technically doesn't require attribution.
+
 ## Game rules
 
 - Boomerang deals 1 damage/hit; monsters have 2 HP (two boomerang hits to
@@ -62,6 +81,25 @@ say what they are for.
   files.
 - At least one design change must come from actually playtesting the built
   game, not from reading the code — note which change and why in `PROCESS.md`.
+- Every time a slice is worth looking at, run `pnpm dev` and leave it serving
+  on localhost so it can be opened directly. The result is judged by playing
+  it in a browser, not from a description of it — don't report a slice as
+  done without having done this.
+- Before calling a slice done, re-check it against the published crit-5 spec
+  (losable; teaches itself with no instructions anywhere; a stranger reaches
+  an ending inside five minutes; one rule under automated test; one
+  playtest-driven change), not only against `Plan.md`.
+- No restriction on code style beyond what `pnpm check` enforces. Prefer
+  sourcing a free/open-licence asset over hand-rolling one when it makes the
+  game more colourful — see "Design motif" above.
+- Run `pnpm check` after every slice, not only at the end of a session, and
+  commit and push each slice once it's green rather than batching many slices
+  into one commit.
+- After pushing a slice, add one or two lines to the "Working notes" section
+  at the bottom of `PROCESS.md` saying what changed and why. This is raw
+  material, not the deliverable — fold it into the polished, cited overview
+  (and delete the working-notes section along with the template comment)
+  once, before shipping.
 
 ## Before shipping
 
