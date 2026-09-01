@@ -8,11 +8,20 @@ redrawn. Each section below says which. None of this game's art, music, or
 characters are taken from SEGA's *Wonder Boy* --- see `Plan.md` and
 `CLAUDE.md` for the "mood, not the IP" rule that governs the design.
 
-## Player sprite --- `player/`
+## Player sprite --- `player/idle-1..4.png`, `run-1..6.png`, `hurt-1..2.png`
 
-**Red Hat Boy** by [Aleksandr Panteleymonov (gamedevpetya)](https://opengameart.org/content/red-hat-boy-free-sprites)
-Licence: **CC0 1.0** (public domain, no attribution required).
-Source zip: <https://opengameart.org/sites/default/files/redhatfiles.zip>
+Hand-authored by the project author (Python/Pillow): a 2-heads-tall chibi
+cat, not human --- orange tabby fur, cream belly/muzzle, a red bandana, and
+a curling tail that sways with the stride. Not sourced from OpenGameArt, so
+no third-party licence applies. Replaces the previously credited **Red Hat
+Boy** by [Aleksandr Panteleymonov (gamedevpetya)](https://opengameart.org/content/red-hat-boy-free-sprites)
+(CC0 1.0), which was reviewed and rejected twice: first for being a rough
+human figure ("캐릭터 구림"), then for rendering too large relative to the
+monster once redrawn as the cat --- `main.ts`'s `PLAYER_SPRITE_HEIGHT`/
+`BASE_MONSTER_SIZE` render constants were retuned afterwards to fix the
+actual on-screen scale, once a preview bug (compositing sprites at native
+PNG pixel size rather than the game's real feet-anchored scaling) was found
+and corrected.
 
 ## Monster sprite --- `monster/slime-1..4.png`
 
@@ -35,16 +44,14 @@ third-party licence applies.
 
 ## Tree --- `bg/tree.png`
 
-**2D Platformer Jungle Pack** by [Tio Aimar](https://opengameart.org/content/2d-platformer-jungle-pack)
-Licence: **CC0 1.0 Universal** ("Credit ... this is not mandatory", per the
-pack's own `License.txt`).
-Source zip: <https://opengameart.org/sites/default/files/2D%20Platformer%20Jungle%20Pack%20%28Tio%20Aimar%29_0.zip>
-
-- `tree.png` <- `PNG/jungle_pack_57.png`
-
-A hand-authored replacement for this file was drafted and rejected (too
-plain next to the rest of the set) --- still sourced from the pack above
-pending a second attempt.
+Hand-authored by the project author (Python/Pillow): a thick curved trunk
+with bark-ridge texture and a curve-following highlight streak, a two-layer
+fanned canopy (darker back layer, brighter front layer) for depth, and three
+coconuts at the crown. Not sourced from OpenGameArt, so no third-party
+licence applies. Replaces the previously credited **2D Platformer Jungle
+Pack** by [Tio Aimar](https://opengameart.org/content/2d-platformer-jungle-pack)
+(CC0 1.0 Universal), which was reviewed and rejected in favour of a denser,
+sturdier-looking tree that matches the rest of the hand-authored background.
 
 ## Music --- `audio/seong_retro_adventure.mp3`
 

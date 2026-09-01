@@ -11,7 +11,8 @@ const CANVAS_HEIGHT = 300;
 const GROUND_Y = 260;
 const PLAYER_WIDTH = 28;
 const PLAYER_HEIGHT = 40;
-const BASE_MONSTER_SIZE = 32;
+const PLAYER_SPRITE_HEIGHT = 42;
+const BASE_MONSTER_SIZE = 35;
 const MOVE_SPEED = 4;
 const PROJECTILE_SPEED = 7;
 const MONSTER_PROJECTILE_SPEED = 4;
@@ -643,7 +644,7 @@ function draw(): void {
     playerFrame(playerState, now),
     player.x - cameraX,
     GROUND_Y - player.y,
-    PLAYER_HEIGHT + 24,
+    PLAYER_SPRITE_HEIGHT,
     player.facing,
   );
 

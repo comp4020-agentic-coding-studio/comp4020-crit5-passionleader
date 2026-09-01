@@ -89,10 +89,15 @@ sourced asset makes a scene noticeably better than a placeholder would.
 Record each asset's origin and licence in `public/assets/CREDITS.md`.
 
 Revisited mid-crit: after a playtest-driven review, hand-authored originals
-now supersede the sourced set for the monster, background (sky/hills/ground/
-plants), and the gun (drawn directly in `main.ts`, no PNG) — the author drew
-these with Python/Pillow and synthesised the SFX with Python's stdlib `wave`,
-and the user approved them over the CC0 originals they replaced. The player
-sprite and `bg/tree.png` are still CC0-sourced pending a further redo — the
-first hand-authored attempt at both was reviewed and rejected as too rough.
-Source-first remains the default for anything not already replaced above.
+now supersede the entire sourced set — monster, background (sky/hills/ground/
+plants/tree), player, and the gun (drawn directly in `main.ts`, no PNG) — the
+author drew these with Python/Pillow and synthesised the SFX with Python's
+stdlib `wave`. The player and tree each needed a second pass before the user
+approved them: the player's first draft (a human figure) was rejected as too
+rough, and its chibi-cat replacement was then found to render too large next
+to the monster — not a design problem but a preview bug (the review page
+compositing sprites at native PNG pixel size rather than the game's real
+feet-anchored scaling); once caught, `main.ts`'s `PLAYER_SPRITE_HEIGHT` and
+`BASE_MONSTER_SIZE` render constants were retuned to the size the user asked
+for. The tree's first draft was rejected as too plain; its replacement (a
+thicker curved trunk, fanned canopy, coconuts) was approved outright.
