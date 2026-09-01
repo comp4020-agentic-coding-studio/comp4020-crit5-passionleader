@@ -12,6 +12,15 @@ main {
   margin: 0 auto;
 }
 
+header nav {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+  max-width: 50rem;
+  margin: 0 auto;
+}
+
 a {
   color: #5ad1e6;
 }
@@ -94,6 +103,10 @@ canvas#game {
 
 @media (min-width: 900px) {
   main {
+    max-width: 70rem;
+  }
+
+  header nav {
     max-width: 70rem;
   }
 
