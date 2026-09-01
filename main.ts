@@ -148,7 +148,7 @@ const projectiles: Projectile[] = [];
 const pops: Pop[] = [];
 const keys = new Set<string>();
 
-const bgm = new Audio("./assets/audio/Seongs_adventure.mp3");
+const bgm = new Audio("./assets/audio/seong_retro_adventure.mp3");
 bgm.loop = true;
 bgm.volume = 0.35;
 const sfxHit = makeSfxPool("./assets/audio/hit.wav");
