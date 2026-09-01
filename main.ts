@@ -571,9 +571,19 @@ function draw(): void {
     } else if (pickup.kind === "heart") {
       ctx.fillText("❤️", sx, GROUND_Y - 4);
     } else {
-      ctx.fillStyle = "#e0c341";
-      ctx.fillRect(sx, GROUND_Y - 22, 22, 12);
-      ctx.fillRect(sx + 14, GROUND_Y - 30, 6, 10);
+      ctx.fillStyle = "#3a4a4d";
+      ctx.fillRect(sx + 2, GROUND_Y - 12, 6, 9);
+      ctx.fillStyle = "#7fb0b8";
+      ctx.fillRect(sx, GROUND_Y - 20, 20, 10);
+      ctx.fillStyle = "#bfe3e6";
+      ctx.fillRect(sx, GROUND_Y - 20, 20, 3);
+      ctx.fillStyle = "#4d6b6e";
+      ctx.fillRect(sx + 18, GROUND_Y - 17, 10, 5);
+      ctx.fillStyle = "#f2e94e";
+      ctx.fillRect(sx + 27, GROUND_Y - 16, 3, 3);
+      ctx.beginPath();
+      ctx.arc(sx + 6, GROUND_Y - 15, 2, 0, Math.PI * 2);
+      ctx.fill();
     }
   }
 
@@ -591,9 +601,18 @@ function draw(): void {
       ctx.arc(sx + 5, GROUND_Y - PLAYER_HEIGHT / 2, 6, 0.3, Math.PI * 1.7);
       ctx.stroke();
     } else {
+      const by = GROUND_Y - PLAYER_HEIGHT / 2;
+      ctx.fillStyle = "rgba(90, 209, 230, 0.35)";
+      ctx.beginPath();
+      ctx.ellipse(sx + 5, by, 10, 5, 0, 0, Math.PI * 2);
+      ctx.fill();
       ctx.fillStyle = "#5ad1e6";
       ctx.beginPath();
-      ctx.ellipse(sx + 5, GROUND_Y - PLAYER_HEIGHT / 2, 7, 3, 0, 0, Math.PI * 2);
+      ctx.ellipse(sx + 5, by, 6, 3, 0, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.fillStyle = "#eafeff";
+      ctx.beginPath();
+      ctx.ellipse(sx + 3, by, 3, 1.6, 0, 0, Math.PI * 2);
       ctx.fill();
     }
   }
