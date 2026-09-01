@@ -95,3 +95,11 @@ directly on the canvas (no image asset) --- simple enough that sourcing one
 would have cost more clarity than it bought. The gun was redrawn from flat
 placeholder rectangles to a small shaded blaster silhouette with a
 glow-core plasma bolt, still entirely vector code in `main.ts`.
+
+## Hazard circles --- `hazard-sprites.ts`
+
+The orange (instant heart loss on hit) and blue (lose a heart after 5
+misses) circle hazards are drawn directly on the canvas via
+`drawOrangeHazard`/`drawBlueHazard` in `hazard-sprites.ts`, matching the
+existing vector-shape style above rather than sourcing image assets --- no
+third-party licence applies.
