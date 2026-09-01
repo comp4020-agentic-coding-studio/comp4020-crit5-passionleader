@@ -1,9 +1,8 @@
 # Process overview
 
-A reading-guide to how the work came together --- a map to your process, not an
-essay about it. Markers read this file and follow its citations; they don't
-trawl the repo for evidence you didn't point at, so if a moment mattered, cite
-it.
+A reading-guide to how the work came together --- a map, not an essay. Markers
+follow the citations here; they don't trawl the repo for evidence you didn't
+point at, so if a moment mattered, cite it.
 
 This file is the shape; the course site's
 [assessment page](https://comp.anu.edu.au/courses/comp4020-agentic-coding-studio/topics/assessment/#what-you-submit)
@@ -13,83 +12,69 @@ cover every deliverable.
 
 ## What I built
 
-A small SEGA *Wonder Boy*-inspired run-and-gun prototype: a chibi cat with 3
-lives pushes right through 3 stages of 5 maps each, fighting slimes with a
+A small SEGA *Wonder Boy*-inspired run-and-gun: a chibi cat with 3 lives
+pushes right through 3 stages of 5 maps each, fighting slimes with a
 boomerang (upgraded to a one-shot-kill gun), collecting fruit for score, and
-facing a boss at the end of every stage --- no tutorial anywhere, so the
-opening screen has to teach the controls itself. Two Claude Code sessions split the work, one directing/reviewing/QA-ing and
-one implementing, coordinating via `ListAgents`/`SendMessage`. Every sprite,
-background, the gun, and every sound (SFX and BGM) ended up hand-authored
-(Python/Pillow, Python's `wave` module, Logic Pro) rather than sourced,
-reversing `Plan.md`'s source-first motif.
+facing a boss at the end of every stage --- no tutorial, so the opening
+screen has to teach the controls itself. Two Claude Code sessions split the
+work, one directing/reviewing/QA-ing and one implementing, coordinating via
+`ListAgents`/`SendMessage`. Every sprite, background, the gun, and every
+sound ended up hand-authored (Python/Pillow, Python's `wave` module, Logic
+Pro) rather than sourced, reversing `Plan.md`'s source-first motif.
 
 ## The moments that mattered
 
-- **One playtest turned a flat demo into an actual game.** The only note
-  that mattered on the first playable build was "there's only one map and it
-  doesn't scroll." Rather than patch that alone, I treated the whole
-  playtest as one rework:
+- **One playtest turned a flat demo into an actual game.** The only note on
+  the first playable build was "there's only one map and it doesn't scroll."
   [`13967e7`](https://github.com/comp4020-agentic-coding-studio/comp4020-crit5-passionleader/commit/13967e7)
-  rebuilt the world as a scrolling camera over 5 maps/stage with a boss on
-  each stage's last map, monster HP scaling 2 → 3 → 4 across the three
-  stages (boss HP fixed at 10x monster HP, so 20/30/40), a visible
-  score/lives HUD, jump/gap obstacles, per-stage background tinting, and a
-  fix for the gun always firing right regardless of facing direction
-  ([`fe13de7`](https://github.com/comp4020-agentic-coding-studio/comp4020-crit5-passionleader/commit/fe13de7)
-  added an in-world control pictogram,
+  reworked the whole world: a scrolling camera over 5 maps per stage, a boss on each stage's last map, monster HP
+  scaling 2 → 3 → 4 (boss HP fixed at 10x), a score/lives HUD, jump/gap
+  obstacles, per-stage tinting, and a fix for the gun always firing right
+  ([`fe13de7`](https://github.com/comp4020-agentic-coding-studio/comp4020-crit5-passionleader/commit/fe13de7),
   [`b53464f`](https://github.com/comp4020-agentic-coding-studio/comp4020-crit5-passionleader/commit/b53464f)
-  the touch d-pad). Playing the fix caught a bug no code-reading would have:
-  standing next to a stationary monster drained all 3 lives in a couple of
-  frames, since nothing gated repeat contact damage --- fixed with
-  invulnerability frames, confirmed by `pnpm check` (20 → 21 tests).
+  followed with a control pictogram and a touch d-pad). Playing the fix
+  caught what no code-reading would: standing next to a monster drained all
+  3 lives in a couple of frames from ungated repeat contact damage --- fixed
+  with invulnerability frames, confirmed by `pnpm check` (20 → 21 tests).
 
 - **A second playtest, and a mistake reversed rather than papered over.**
-  Once the loop was playable end to end,
   [`23eba26`](https://github.com/comp4020-agentic-coding-studio/comp4020-crit5-passionleader/commit/23eba26)
-  landed a pause/mute button pair revealing resume/reset on pause, a
-  jump-dodge for monster attacks, the gun pickup moved to stage 2's second
-  map instead of its first, a heart pickup on stage 3's first map, a
-  2-shots/second weapon cap, and a BGM swap to a track I'd composed myself.
-  A follow-up playtest
+  added pause/mute, a jump-dodge, a relocated gun pickup, a heart pickup, a
+  fire-rate cap, and a BGM swap to a self-composed track. A follow-up
+  playtest
   ([`7e1b3cf`](https://github.com/comp4020-agentic-coding-studio/comp4020-crit5-passionleader/commit/7e1b3cf))
-  found jump only dodged projectiles, not a monster's own body --- the same
-  `grounded` gate was missing from the body-contact check, confirmed with a
-  debug hook: 35 airborne frames over a monster cost no lives, then one was
-  lost on the exact landing frame. The BGM swap then needed a harder
-  correction: on a second listen, the "original" track was close enough to
-  an existing song to be a real plagiarism risk. Renaming was rejected for
+  found jump only dodged projectiles, not a monster's body --- the same
+  `grounded` gate was missing there too, confirmed with a debug hook. On a
+  second listen, the "original" BGM track was close enough to an existing
+  song to be a plagiarism risk, so it was replaced --- not renamed --- in
   [`9431355`](https://github.com/comp4020-agentic-coding-studio/comp4020-crit5-passionleader/commit/9431355),
-  a genuinely new composition, with `CREDITS.md` corrected to match.
+  `CREDITS.md` corrected.
 
 - **Reversing the CC0-asset motif through a review loop, not a drive-by
   request.** `Plan.md` called for sourcing free assets, not drawing a full
   set from scratch. Partway through I asked whether hand-authoring
   everything would look better, and ran it as a reviewed change: every
   replacement was drafted in a scratch directory, then shown on a review
-  page at the game's true scale so each asset could be approved or rejected
-  individually. The player and background tree were rejected twice each ---
-  the player first for looking like a rough human figure, then, redrawn as a
-  chibi cat, for looking oversized next to the monster. The second
-  complaint traced to a bug in my own review tooling: the preview
-  composited sprites at native PNG pixel size instead of the game's real
-  feet-anchored scaling, overstating the mismatch by roughly 2.4x. Fixing
-  the preview, then retuning `PLAYER_SPRITE_HEIGHT`/`BASE_MONSTER_SIZE` to
-  the scale actually asked for, is what separated a real design fix from
-  chasing a measurement artifact.
+  page at true scale so each asset could be approved or rejected
+  individually. The player and background tree were rejected twice each,
+  the size complaint tracing to a bug in the review tooling itself --- it
+  composited sprites at native pixel size instead of the game's real
+  feet-anchored scaling, overstating the mismatch ~2.4x. Fixing the preview,
+  then retuning the actual scale, separated a real design fix from a
+  measurement artifact.
   [`3c1882b...af63561`](https://github.com/comp4020-agentic-coding-studio/comp4020-crit5-passionleader/compare/3c1882b...af63561),
   `pnpm check` green throughout, verified live via the dev server.
 
 ## Before you ship
 
-`pnpm check:evidence` verifies your citations resolve to real commits, that a
-reflection entry the marker reads is in `reflections/`, and that your
-`CLAUDE.md` is there --- before a marker ever opens the file. It checks that
-your map is traceable, not that it is good: the marker judges whether your
-small, deliberately chosen set of moments shows real judgement and reflection. A
-green check is not a substitute for that curation.
+`pnpm check:evidence` verifies citations resolve to real commits, and that a
+reflection entry and `CLAUDE.md` are present --- before a marker opens the
+file. It checks the map is traceable, not that it's good: the marker judges
+whether this small, deliberately chosen set of moments shows real judgement.
+A green check isn't a substitute for that curation.
 
 Images aren't checked: unlike a citation whose SHA doesn't resolve, a broken
-image is visible the moment this file is rendered on GitHub.
+image is visible the moment this file renders on GitHub.
 
 ## Working notes (raw, kept for reference)
 
