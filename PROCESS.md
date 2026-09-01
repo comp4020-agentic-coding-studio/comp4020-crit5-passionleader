@@ -105,3 +105,19 @@ at the top) with the curated, cited overview before shipping.
   `Plan.md`'s "punchy, readable feedback" note. `game-rules.ts` untouched;
   `pnpm check` still green. Still owe: an actual playtest-driven change (not
   yet done by a human clicking through it) and stage 2/3 + bosses.
+- **Playtest-driven change** (the required one): the user played `2a5b312` at
+  `localhost:5173` and reported nine issues, the headline one being "there's
+  only one flat map, and it doesn't scroll." That single observation drove
+  [`13967e7`](https://github.com/comp4020-agentic-coding-studio/comp4020-crit5-passionleader/commit/13967e7):
+  a camera/world-scrolling rewrite with 5 maps per stage, a boss on the last
+  map of each stage (hp = 10x that stage's regular monster hp), per-stage
+  difficulty scaling (monster hp 2/3/4, ranged attacks and bigger sprites
+  from stage 2 on, gun delayed to stage 2), jump + block/gap obstacles, a
+  fix for the score/lives text being unreadable against the sky (a backing
+  bar, not a missing draw call), a "STAGE N" intro banner, per-stage colour
+  tint for background variety, and a fix for projectiles always firing right
+  regardless of which way the player was facing. Playtesting also surfaced a
+  bug no code-reading would have caught: standing next to a stationary
+  monster to shoot it drained all 3 lives in a couple of frames, since
+  nothing gated repeat contact damage — added invulnerability frames after
+  any hit. `pnpm check` green (21 tests, +1 for boss-hp scaling).
