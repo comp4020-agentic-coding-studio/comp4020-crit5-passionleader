@@ -91,3 +91,17 @@ at the top) with the curated, cited overview before shipping.
   harness current, and integrating/verifying against the rubric before each
   push) — worth a line in the final reflection about directing a second
   agent as part of "how you directed the work."
+- [`bf1bcee`](https://github.com/comp4020-agentic-coding-studio/comp4020-crit5-passionleader/commit/bf1bcee):
+  the delegated session's minimal playable loop — `game-rules.ts` matching
+  `spec/crit-5.test.ts`'s exact signatures, and a canvas loop (move, fire,
+  monster HP, life loss, game over) with placeholder rectangles standing in
+  for art. `pnpm check` green (20 tests) before I picked the branch back up.
+- [`2a5b312`](https://github.com/comp4020-agentic-coding-studio/comp4020-crit5-passionleader/commit/2a5b312):
+  replaced every placeholder rectangle with the sourced sprites/background
+  from `dc389e9` --- animated player (idle/run/hurt) and slime frames,
+  layered jungle/ground/tree/plant art, bgm + four SFX (bgm starts on first
+  keypress to respect autoplay policy). Added hit-flash, a brief shake and
+  hurt-frame feedback on taking damage, and a small pickup pop label, per
+  `Plan.md`'s "punchy, readable feedback" note. `game-rules.ts` untouched;
+  `pnpm check` still green. Still owe: an actual playtest-driven change (not
+  yet done by a human clicking through it) and stage 2/3 + bosses.
