@@ -26,6 +26,7 @@ const JUMP_SPEED = 10;
 const MAP_EDGE_MARGIN = 20;
 const MONSTER_ATTACK_RANGE = 260;
 const MONSTER_ATTACK_COOLDOWN_MS = 1400;
+const GUIDE_TIMEOUT_MS = 4000;
 
 type PlayerAnim = "idle" | "run" | "hurt";
 
@@ -127,6 +128,7 @@ let invulnerableUntil = -Infinity;
 let shakeUntil = -Infinity;
 let banner: Banner | null = null;
 let firstInputGiven = false;
+let guideStartedAt = -Infinity;
 
 let stageIndex = 0;
 let mapIndex = 0;
@@ -414,6 +416,49 @@ function drawBanner(now: number): void {
   ctx.restore();
 }
 
+function drawKeyGuide(now: number): void {
+  if (stageIndex !== 0 || mapIndex !== 0) return;
+  if (firstInputGiven) return;
+  if (now - guideStartedAt > GUIDE_TIMEOUT_MS) return;
+
+  const baseX = 60 - cameraX;
+  const y = GROUND_Y - 46;
+  const alpha = 0.55 + 0.25 * Math.sin(now / 220);
+
+  ctx.save();
+  ctx.globalAlpha = alpha;
+  ctx.fillStyle = "#f4f4f0";
+  ctx.strokeStyle = "#f4f4f0";
+  ctx.lineWidth = 2;
+  ctx.textAlign = "center";
+  ctx.textBaseline = "middle";
+
+  const keycap = (cx: number, glyph: string): void => {
+    ctx.fillStyle = "rgba(10,10,10,0.55)";
+    ctx.fillRect(cx - 16, y - 16, 32, 32);
+    ctx.strokeRect(cx - 16, y - 16, 32, 32);
+    ctx.fillStyle = "#f4f4f0";
+    ctx.font = "bold 18px monospace";
+    ctx.fillText(glyph, cx, y + 1);
+  };
+
+  keycap(baseX, "←");
+  keycap(baseX + 40, "→");
+
+  const spaceX = baseX + 100;
+  ctx.fillStyle = "rgba(10,10,10,0.55)";
+  ctx.fillRect(spaceX - 30, y - 16, 60, 32);
+  ctx.strokeRect(spaceX - 30, y - 16, 60, 32);
+  ctx.fillStyle = "#f4f4f0";
+  ctx.beginPath();
+  ctx.arc(spaceX, y, 6, 0, Math.PI * 2);
+  ctx.fill();
+
+  ctx.textAlign = "left";
+  ctx.textBaseline = "alphabetic";
+  ctx.restore();
+}
+
 function draw(): void {
   const now = performance.now();
   const stage = STAGES[stageIndex];
@@ -531,6 +576,8 @@ function draw(): void {
     ctx.restore();
   }
 
+  drawKeyGuide(now);
+
   ctx.fillStyle = "rgba(10,10,10,0.45)";
   ctx.fillRect(6, 6, 230, 46);
   ctx.fillStyle = "#f4f4f0";
@@ -584,6 +631,7 @@ Promise.all([
   sprites = { playerIdle, playerRun, playerHurt, slime, bgFar, ground, tree, plant };
   loadMap(0, 0);
   banner = { text: "STAGE 1", startedAt: performance.now() };
+  guideStartedAt = performance.now();
   if (isTouchDevice()) {
     const touchControls = must(document.querySelector<HTMLElement>("#touch-controls"), "missing #touch-controls");
     touchControls.hidden = false;
@@ -591,7 +639,3 @@ Promise.all([
   }
   loop();
 });
-
-// Extension point for the follow-up slice: an in-world key-guide pictogram
-// (arrow/space icons, not text) should only render while stageIndex === 0,
-// mapIndex === 0, and !firstInputGiven — call it from draw() before the HUD.
