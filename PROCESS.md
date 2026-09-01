@@ -173,3 +173,14 @@ at the top) with the curated, cited overview before shipping.
   content, not its filename --- the forward fix (delete + replace + correct
   the record) fully addresses it going forward. `pnpm check` green
   (21 tests).
+- [`7e1b3cf`](https://github.com/comp4020-agentic-coding-studio/comp4020-crit5-passionleader/commit/7e1b3cf):
+  another playtest-driven fix --- the user reported still taking damage from
+  jumping over a monster. `23eba26`'s jump-dodge only gated the
+  monster-*projectile* collision on `player.grounded`; the separate
+  monster-*body* contact check had no such gate, so touching a monster's x
+  range always hurt regardless of jump state. Added the same `grounded` gate
+  there. Verified with a temporary (removed before commit) debug hook driving
+  frame-by-frame state from a headless browser: lives stayed unchanged across
+  35 airborne frames directly over a monster, then dropped exactly on the
+  frame the player landed while still overlapping it. `pnpm check` green
+  (21 tests).
