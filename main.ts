@@ -151,14 +151,28 @@ const projectiles: Projectile[] = [];
 const pops: Pop[] = [];
 const keys = new Set<string>();
 
-const bgm = new Audio("./assets/audio/seong_retro_adventure.mp3");
-bgm.loop = true;
-bgm.volume = 0.35;
+const bgmStage = new Audio("./assets/audio/seong_retro_adventure.mp3");
+bgmStage.loop = true;
+bgmStage.volume = 0.35;
+const bgmBoss = new Audio("./assets/audio/boss_theme.wav");
+bgmBoss.loop = true;
+bgmBoss.volume = 0.35;
+let bgm = bgmStage;
 const sfxHit = makeSfxPool("./assets/audio/hit.wav");
 const sfxHurt = makeSfxPool("./assets/audio/hurt.wav", 2);
 const sfxPickup = makeSfxPool("./assets/audio/pickup.wav");
 const sfxPowerup = makeSfxPool("./assets/audio/powerup.wav", 1);
 let bgmStarted = false;
+
+function setBgmTrack(isBossMap: boolean): void {
+  const next = isBossMap ? bgmBoss : bgmStage;
+  if (next === bgm) return;
+  bgm.pause();
+  bgm.currentTime = 0;
+  bgm = next;
+  bgm.muted = muted;
+  if (bgmStarted && !paused && !gameOver) bgm.play().catch(() => {});
+}
 
 window.addEventListener("keydown", (e) => {
   if (["ArrowLeft", "ArrowRight", "ArrowUp", "Space"].includes(e.code)) e.preventDefault();
@@ -211,6 +225,7 @@ function loadMap(newStageIndex: number, newMapIndex: number): void {
   stageIndex = newStageIndex;
   mapIndex = newMapIndex;
   mapSpec = buildMap(stageIndex, mapIndex);
+  setBgmTrack(mapSpec.isBossMap);
   monsters = mapSpec.monsters.map(instantiateMonster);
   pickups = mapSpec.pickups.map((p) => ({ ...p, taken: false }));
   obstacles = mapSpec.obstacles.slice();
@@ -298,7 +313,8 @@ function resetGame(): void {
 
 function toggleMute(): void {
   muted = !muted;
-  bgm.muted = muted;
+  bgmStage.muted = muted;
+  bgmBoss.muted = muted;
   for (const pool of [sfxHit, sfxHurt, sfxPickup, sfxPowerup]) {
     for (const audio of pool) audio.muted = muted;
   }

@@ -62,6 +62,17 @@ built by ear-copying an existing song closely enough to raise a real
 plagiarism risk; that file was pulled before ever being credited as
 "original" here and swapped for this fully original composition instead.
 
+## Boss BGM --- `audio/boss_theme.wav`
+
+Synthesised from scratch in Python (stdlib `wave`/`struct`/`math`, same
+technique as the sound effects below: raw square/sawtooth waveforms with a
+hand-tuned attack/release envelope) --- not sampled or sourced from
+anywhere, so no third-party licence applies. A faster, minor-key loop
+(`scripts/gen_boss_theme.py`) distinct in key, tempo, and register from
+`seong_retro_adventure.mp3`, which stays as the regular stage BGM; `main.ts`
+swaps to this track only while `mapSpec.isBossMap` is true and swaps back
+once the boss map ends.
+
 ## Sound effects --- `audio/*.wav`
 
 Synthesised from scratch in Python (stdlib `wave`/`struct`/`math`, raw
