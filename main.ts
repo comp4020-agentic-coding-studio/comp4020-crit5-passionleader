@@ -4,6 +4,7 @@
 // this file drives.
 import { applyHit, bossHp, isGameOver, isMonsterDead, loseLife, STARTING_LIVES, type Weapon } from "./game-rules.ts";
 import { buildMap, STAGES, type MapSpec } from "./stages.ts";
+import { isTouchDevice, setupTouchControls } from "./touch-controls.ts";
 
 const CANVAS_WIDTH = 800;
 const CANVAS_HEIGHT = 300;
@@ -583,11 +584,14 @@ Promise.all([
   sprites = { playerIdle, playerRun, playerHurt, slime, bgFar, ground, tree, plant };
   loadMap(0, 0);
   banner = { text: "STAGE 1", startedAt: performance.now() };
+  if (isTouchDevice()) {
+    const touchControls = must(document.querySelector<HTMLElement>("#touch-controls"), "missing #touch-controls");
+    touchControls.hidden = false;
+    setupTouchControls(keys, fire, jump);
+  }
   loop();
 });
 
 // Extension point for the follow-up slice: an in-world key-guide pictogram
 // (arrow/space icons, not text) should only render while stageIndex === 0,
 // mapIndex === 0, and !firstInputGiven — call it from draw() before the HUD.
-// Another follow-up slice wires touch-controls.ts's setupTouchControls(keys,
-// fire, jump) here once that file and the #touch-controls markup exist.

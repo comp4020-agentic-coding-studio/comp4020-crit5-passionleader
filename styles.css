@@ -25,3 +25,35 @@ canvas#game {
   border: 2px solid #1c3d21;
   image-rendering: pixelated;
 }
+
+#touch-controls {
+  display: flex;
+  justify-content: space-between;
+  gap: 0.75rem;
+  margin-top: 0.75rem;
+  max-width: 800px;
+  touch-action: none;
+}
+
+#touch-controls[hidden] {
+  display: none;
+}
+
+#touch-controls button {
+  flex: 0 0 auto;
+  min-width: 3rem;
+  min-height: 3rem;
+  padding: 0.75rem 1rem;
+  font-size: 1.4rem;
+  line-height: 1;
+  color: #f4f4f0;
+  background: rgba(28, 61, 33, 0.85);
+  border: 2px solid #1c3d21;
+  border-radius: 0.5rem;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+#touch-controls button:active {
+  background: #1c3d21;
+}
