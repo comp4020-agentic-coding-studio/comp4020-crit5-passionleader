@@ -131,3 +131,17 @@ at the top) with the curated, cited overview before shipping.
   only, no text) drawn on stage 1's first map until the first input or a 4s
   timeout, per the user's request to show the controls as an in-game drawing
   rather than an instructions screen. `pnpm check` green (21 tests).
+- **Second playtest round** (another actually-played-it feedback pass):
+  [`23eba26`](https://github.com/comp4020-agentic-coding-studio/comp4020-crit5-passionleader/commit/23eba26):
+  pause (⏸)/mute (🔊) icon buttons top-right, revealing resume/reset when
+  paused (reset also escapes a GAME OVER screen, previously only possible by
+  reloading); monster projectiles now only connect while grounded, so a
+  jump dodges them; the stage-2 gun pickup moved from its first map to its
+  second; a heart pickup on stage 3's first map restores one life (capped
+  at 3); fire rate capped at 2 shots/sec for both weapons; swapped the CC0
+  placeholder BGM loop for an original track the user supplied
+  (`Seongs_adventure.mp3`). Verified live with a headless-browser pass
+  through the pause/resume/mute state machine and temporary (removed before
+  commit) debug hooks confirming the gun/heart pickups land on the intended
+  map indices and that `grounded` toggles correctly on jump. `pnpm check`
+  green (21 tests).
