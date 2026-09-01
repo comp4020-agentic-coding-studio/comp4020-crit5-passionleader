@@ -145,3 +145,31 @@ at the top) with the curated, cited overview before shipping.
   commit) debug hooks confirming the gun/heart pickups land on the intended
   map indices and that `grounded` toggles correctly on jump. `pnpm check`
   green (21 tests).
+- [`ea19272`](https://github.com/comp4020-agentic-coding-studio/comp4020-crit5-passionleader/commit/ea19272):
+  swapped the header's "Home" link for a contact `mailto:` link, widened the
+  playable area on desktop via a `min-width: 900px` media query (CSS max-width
+  only --- canvas render resolution untouched, so `image-rendering: pixelated`
+  keeps the upscale crisp), and made the touch-control buttons wider
+  left-to-right for easier thumb targets. Delegated to the medium session as
+  a narrow, decoupled UI slice (`index.html`/`styles.css` only, no engine
+  files) while this session handled the BGM issue below in parallel;
+  confirmed by diffing the commit against the delegated spec, an independent
+  `pnpm check` (21 tests), and a headless-browser pass measuring the actual
+  rendered bounding boxes at a 1400x900 desktop viewport and a 390x844 touch
+  viewport, plus screenshots at both sizes. Touch controls' mobile-only
+  visibility (`isTouchDevice()`) was already correct and needed no change.
+- [`9431355`](https://github.com/comp4020-agentic-coding-studio/comp4020-crit5-passionleader/commit/9431355):
+  swapped the BGM track a second time after the author disclosed the
+  supposedly "original" track credited in `23eba26` was actually an ear-copy
+  of an existing song --- a real plagiarism risk for a publicly-assessed
+  deliverable, not just a filename problem, so renaming alone (the author's
+  first instinct) was rejected in favour of sourcing a genuinely original
+  replacement. Copied the author's newly-composed track in, updated the
+  `bgm` audio src, and corrected `CREDITS.md` to describe both the fix and
+  why it was needed, rather than leaving the earlier (now-inaccurate)
+  "original track" claim in place. Chose not to rewrite git history to
+  scrub the old file from past commits, since this is a shared repo other
+  sessions are actively working against and the risk was in the file's
+  content, not its filename --- the forward fix (delete + replace + correct
+  the record) fully addresses it going forward. `pnpm check` green
+  (21 tests).
