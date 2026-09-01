@@ -198,3 +198,19 @@ at the top) with the curated, cited overview before shipping.
   tree stay CC0-sourced pending a second attempt. `pnpm check` green
   (21 tests); verified live via the dev server, not just the review page.
   Still owe: the character and tree redo.
+- [`af63561`](https://github.com/comp4020-agentic-coding-studio/comp4020-crit5-passionleader/commit/af63561):
+  the character/tree redo `3c1882b` owed. Player became a 2-heads-tall chibi
+  cat (not human, per the author's explicit "고양이여도 괜찮다"); the tree
+  got a thicker curved trunk and a fanned canopy. The cat then hit a second
+  round of feedback -- "too big, monster too small" -- which traced back to
+  a bug in my own review tooling, not the art: the review page composited
+  sprites at native PNG pixel size rather than the game's real
+  feet-anchored scaling (`drawSpriteFeetAt`), overstating the player/monster
+  size gap by ~2.4x. Fixed the preview, then retuned the actual render
+  constants (`PLAYER_SPRITE_HEIGHT`, `BASE_MONSTER_SIZE`) to the scale the
+  author asked for, checking first that a bigger monster hitbox doesn't
+  overlap adjacent monsters/obstacles (`stages.ts`'s spacing) or break
+  jump-dodge (gated purely on `player.grounded`, not vertical overlap, so
+  unaffected). Every sprite/bg/gun/SFX asset is now hand-authored; the
+  original sourced CC0 set is gone. `pnpm check` green (21 tests); verified
+  live via the dev server at each sizing step, not just the review page.
