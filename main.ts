@@ -15,7 +15,7 @@ const BASE_MONSTER_SIZE = 32;
 const MOVE_SPEED = 4;
 const PROJECTILE_SPEED = 7;
 const MONSTER_PROJECTILE_SPEED = 4;
-const FIRE_COOLDOWN_MS = 280;
+const FIRE_COOLDOWN_MS = 500;
 const HURT_FLASH_MS = 260;
 const INVULNERABLE_MS = 900;
 const HIT_FLASH_MS = 120;
@@ -50,7 +50,7 @@ interface Projectile {
 
 interface Pickup {
   x: number;
-  kind: "gun" | "fruit";
+  kind: "gun" | "fruit" | "heart";
   fruitEmoji: string;
   taken: boolean;
 }
@@ -115,6 +115,10 @@ const canvas = must(document.querySelector<HTMLCanvasElement>("#game"), "missing
 canvas.width = CANVAS_WIDTH;
 canvas.height = CANVAS_HEIGHT;
 const ctx = must(canvas.getContext("2d"), "2d canvas context unavailable");
+const pauseBtn = must(document.querySelector<HTMLButtonElement>("#pause-btn"), "missing #pause-btn");
+const resumeBtn = must(document.querySelector<HTMLButtonElement>("#resume-btn"), "missing #resume-btn");
+const resetBtn = must(document.querySelector<HTMLButtonElement>("#reset-btn"), "missing #reset-btn");
+const muteBtn = must(document.querySelector<HTMLButtonElement>("#mute-btn"), "missing #mute-btn");
 
 const player = { x: 60, y: 0, vy: 0, vx: 0, facing: 1 as 1 | -1, grounded: true };
 let weapon: Weapon = "boomerang";
@@ -129,6 +133,8 @@ let shakeUntil = -Infinity;
 let banner: Banner | null = null;
 let firstInputGiven = false;
 let guideStartedAt = -Infinity;
+let paused = false;
+let muted = false;
 
 let stageIndex = 0;
 let mapIndex = 0;
@@ -142,7 +148,7 @@ const projectiles: Projectile[] = [];
 const pops: Pop[] = [];
 const keys = new Set<string>();
 
-const bgm = new Audio("./assets/audio/bgm.mp3");
+const bgm = new Audio("./assets/audio/Seongs_adventure.mp3");
 bgm.loop = true;
 bgm.volume = 0.35;
 const sfxHit = makeSfxPool("./assets/audio/hit.wav");
@@ -163,6 +169,11 @@ window.addEventListener("keydown", (e) => {
   else keys.add(e.code);
 });
 window.addEventListener("keyup", (e) => keys.delete(e.code));
+
+pauseBtn.addEventListener("click", () => pauseGame());
+resumeBtn.addEventListener("click", () => resumeGame());
+resetBtn.addEventListener("click", () => resetGame());
+muteBtn.addEventListener("click", () => toggleMute());
 
 function instantiateMonster(spec: { x: number; hp: number; isBoss: boolean }): Monster {
   const stage = STAGES[stageIndex];
@@ -226,8 +237,51 @@ function fallIntoGap(now: number): void {
   if (!gameOver) resetPlayerToMapStart();
 }
 
+function pauseGame(): void {
+  if (paused) return;
+  paused = true;
+  bgm.pause();
+  pauseBtn.hidden = true;
+  resumeBtn.hidden = false;
+  resetBtn.hidden = false;
+}
+
+function resumeGame(): void {
+  if (!paused) return;
+  paused = false;
+  if (bgmStarted) bgm.play().catch(() => {});
+  pauseBtn.hidden = false;
+  resumeBtn.hidden = true;
+  resetBtn.hidden = true;
+}
+
+function resetGame(): void {
+  weapon = "boomerang";
+  lives = STARTING_LIVES;
+  score = 0;
+  gameOver = false;
+  victory = false;
+  lastFireAt = -Infinity;
+  hurtUntil = -Infinity;
+  invulnerableUntil = -Infinity;
+  shakeUntil = -Infinity;
+  loadMap(0, 0);
+  banner = { text: "STAGE 1", startedAt: performance.now() };
+  resumeGame();
+}
+
+function toggleMute(): void {
+  muted = !muted;
+  bgm.muted = muted;
+  for (const pool of [sfxHit, sfxHurt, sfxPickup, sfxPowerup]) {
+    for (const audio of pool) audio.muted = muted;
+  }
+  muteBtn.textContent = muted ? "🔇" : "🔊";
+  muteBtn.setAttribute("aria-label", muted ? "Unmute sound" : "Mute sound");
+}
+
 function fire(): void {
-  if (gameOver) return;
+  if (gameOver || paused) return;
   const now = performance.now();
   if (now - lastFireAt < FIRE_COOLDOWN_MS) return;
   lastFireAt = now;
@@ -241,7 +295,7 @@ function fire(): void {
 }
 
 function jump(): void {
-  if (gameOver) return;
+  if (gameOver || paused) return;
   if (player.grounded) {
     player.vy = JUMP_SPEED;
     player.grounded = false;
@@ -253,7 +307,7 @@ function obstacleAt(worldX: number): Obstacle | undefined {
 }
 
 function update(): void {
-  if (gameOver) return;
+  if (gameOver || paused) return;
   const now = performance.now();
   const stage = STAGES[stageIndex];
 
@@ -335,7 +389,7 @@ function update(): void {
 
   for (let i = projectiles.length - 1; i >= 0; i--) {
     const shot = projectiles[i];
-    if (shot.owner === "monster" && overlap(shot.x, 8, player.x, PLAYER_WIDTH)) {
+    if (shot.owner === "monster" && player.grounded && overlap(shot.x, 8, player.x, PLAYER_WIDTH)) {
       projectiles.splice(i, 1);
       if (now >= invulnerableUntil) takeHit(now);
     }
@@ -345,19 +399,20 @@ function update(): void {
     if (pickup.taken) continue;
     if (overlap(player.x, PLAYER_WIDTH, pickup.x, 20)) {
       pickup.taken = true;
-      pops.push({
-        x: pickup.x + 10,
-        y: GROUND_Y - 30,
-        glyph: pickup.kind === "gun" ? "+GUN" : "+10",
-        startedAt: now,
-      });
+      let glyph = "+10";
       if (pickup.kind === "fruit") {
         score += 10;
         playSfx(sfxPickup);
-      } else {
+      } else if (pickup.kind === "gun") {
         weapon = "gun";
         playSfx(sfxPowerup);
+        glyph = "+GUN";
+      } else {
+        lives = Math.min(STARTING_LIVES, lives + 1);
+        playSfx(sfxPowerup);
+        glyph = "+1❤";
       }
+      pops.push({ x: pickup.x + 10, y: GROUND_Y - 30, glyph, startedAt: now });
     }
   }
 
@@ -508,6 +563,8 @@ function draw(): void {
     ctx.font = "22px system-ui, sans-serif";
     if (pickup.kind === "fruit") {
       ctx.fillText(pickup.fruitEmoji, sx, GROUND_Y - 4);
+    } else if (pickup.kind === "heart") {
+      ctx.fillText("❤️", sx, GROUND_Y - 4);
     } else {
       ctx.fillStyle = "#e0c341";
       ctx.fillRect(sx, GROUND_Y - 22, 22, 12);
@@ -595,6 +652,14 @@ function draw(): void {
     ctx.font = "28px monospace";
     ctx.textAlign = "center";
     ctx.fillText(victory ? "YOU WIN" : "GAME OVER", CANVAS_WIDTH / 2, CANVAS_HEIGHT / 2);
+    ctx.textAlign = "left";
+  } else if (paused) {
+    ctx.fillStyle = "rgba(0, 0, 0, 0.5)";
+    ctx.fillRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
+    ctx.fillStyle = "#f4f4f0";
+    ctx.font = "28px monospace";
+    ctx.textAlign = "center";
+    ctx.fillText("PAUSED", CANVAS_WIDTH / 2, CANVAS_HEIGHT / 2);
     ctx.textAlign = "left";
   }
 }

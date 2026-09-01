@@ -29,7 +29,7 @@ export interface MonsterSpec {
 
 export interface PickupSpec {
   x: number;
-  kind: "fruit" | "gun";
+  kind: "fruit" | "gun" | "heart";
   fruitEmoji: string;
 }
 
@@ -88,8 +88,11 @@ export function buildMap(stageIndex: number, mapIndex: number): MapSpec {
     { x: width * 0.18, kind: "fruit", fruitEmoji: FRUIT_EMOJI[mapIndex % FRUIT_EMOJI.length] },
     { x: width * 0.65, kind: "fruit", fruitEmoji: FRUIT_EMOJI[(mapIndex + 1) % FRUIT_EMOJI.length] },
   ];
-  if (stage.gunOnThisStage && mapIndex === 0) {
+  if (stage.gunOnThisStage && mapIndex === 1) {
     pickups.push({ x: width * 0.42, kind: "gun", fruitEmoji: "" });
+  }
+  if (stageIndex === 2 && mapIndex === 0) {
+    pickups.push({ x: width * 0.55, kind: "heart", fruitEmoji: "" });
   }
 
   return { width, isBossMap, monsters, pickups, obstacles };

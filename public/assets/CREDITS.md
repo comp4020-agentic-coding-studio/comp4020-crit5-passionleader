@@ -32,11 +32,11 @@ Source zip: <https://opengameart.org/sites/default/files/2D%20Platformer%20Jungl
 - `tree.png` <- `PNG/jungle_pack_57.png`
 - `plant.png` <- `PNG/jungle_pack_63.png`
 
-## Music --- `audio/bgm.mp3`
+## Music --- `audio/Seongs_adventure.mp3`
 
-**Happy Adventure (Loop)** by [rezoons](https://opengameart.org/content/happy-adventure-loop)
-Licence: **CC0 1.0** (public domain, no attribution required).
-Source: <https://opengameart.org/sites/default/files/happy_adveture.mp3>
+Original track supplied directly by the project author for this game --- not
+sourced from OpenGameArt, so no third-party licence applies. Replaced the
+earlier CC0 "Happy Adventure (Loop)" placeholder track per the user's request.
 
 ## Sound effects --- `audio/*.wav`
 

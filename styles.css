@@ -16,14 +16,48 @@ a {
   color: #5ad1e6;
 }
 
+#game-wrap {
+  position: relative;
+  max-width: 800px;
+  margin-top: 1rem;
+}
+
 canvas#game {
   display: block;
   width: 100%;
   max-width: 800px;
   aspect-ratio: 8 / 3;
-  margin-top: 1rem;
   border: 2px solid #1c3d21;
   image-rendering: pixelated;
+}
+
+#game-controls {
+  position: absolute;
+  top: 0.5rem;
+  right: 0.5rem;
+  display: flex;
+  gap: 0.4rem;
+}
+
+#game-controls button {
+  min-width: 2.25rem;
+  min-height: 2.25rem;
+  padding: 0.3rem 0.5rem;
+  font-size: 1.1rem;
+  line-height: 1;
+  color: #f4f4f0;
+  background: rgba(10, 10, 10, 0.55);
+  border: 2px solid #1c3d21;
+  border-radius: 0.4rem;
+  cursor: pointer;
+}
+
+#game-controls button:active {
+  background: #1c3d21;
+}
+
+#game-controls button[hidden] {
+  display: none;
 }
 
 #touch-controls {
