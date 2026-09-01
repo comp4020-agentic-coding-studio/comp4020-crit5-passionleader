@@ -242,3 +242,13 @@ week, kept here rather than deleted so the day-to-day rhythm is still visible.
   on game over/full clear instead of requiring a manual pause first, and a
   factual correction to the BGM reflection (the session player performed the
   parts; the chords and instrument choices were still hand-picked).
+
+- **A second, synthesised BGM for boss fights.** The existing
+  `seong_retro_adventure.mp3` (Logic Pro) stays as the regular stage track;
+  a faster, minor-key loop synthesised the same way as the SFX (Python
+  `wave`/`struct`/`math`, `scripts/gen_boss_theme.py`) now swaps in only
+  while `mapSpec.isBossMap` is true, using the boss-map flag already in
+  `stages.ts` rather than adding new state.
+  [`441a353`](https://github.com/comp4020-agentic-coding-studio/comp4020-crit5-passionleader/commit/441a353),
+  `pnpm check` green; verified live via the dev server that both tracks
+  load with no console errors.
