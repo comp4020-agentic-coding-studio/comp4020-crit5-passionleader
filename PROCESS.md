@@ -121,3 +121,13 @@ at the top) with the curated, cited overview before shipping.
   monster to shoot it drained all 3 lives in a couple of frames, since
   nothing gated repeat contact damage — added invulnerability frames after
   any hit. `pnpm check` green (21 tests, +1 for boss-hp scaling).
+- [`b53464f`](https://github.com/comp4020-agentic-coding-studio/comp4020-crit5-passionleader/commit/b53464f):
+  added on-screen touch controls (`touch-controls.ts`, a hidden
+  `#touch-controls` button row) per the user's request that a touch device
+  get a virtual keyboard; only revealed when `isTouchDevice()` is true, so
+  keyboard play is unaffected. `pnpm check` green (21 tests).
+- [`fe13de7`](https://github.com/comp4020-agentic-coding-studio/comp4020-crit5-passionleader/commit/fe13de7):
+  added an in-world key-guide pictogram (arrow keycaps + a space bar, icons
+  only, no text) drawn on stage 1's first map until the first input or a 4s
+  timeout, per the user's request to show the controls as an in-game drawing
+  rather than an instructions screen. `pnpm check` green (21 tests).
