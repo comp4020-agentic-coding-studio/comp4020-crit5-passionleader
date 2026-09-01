@@ -214,3 +214,17 @@ at the top) with the curated, cited overview before shipping.
   unaffected). Every sprite/bg/gun/SFX asset is now hand-authored; the
   original sourced CC0 set is gone. `pnpm check` green (21 tests); verified
   live via the dev server at each sizing step, not just the review page.
+- [`78556d3`](https://github.com/comp4020-agentic-coding-studio/comp4020-crit5-passionleader/commit/78556d3):
+  a permanent `assets.html` gallery page, requested once the ad-hoc review
+  pages had done their job -- every player/slime animation, background
+  layer, the code-drawn gun/projectiles, and all audio, shown at the exact
+  size/scale the game actually uses (reused `drawSpriteFeetAt`'s math and
+  the live vector-drawing code verbatim, not redrawn from memory, so this
+  page can't drift from what's on screen the way the earlier review pages
+  did). Linked from a new "View assets!" button next to the header email
+  link; `vite.config.ts` picked the new root `.html` file up as a build
+  entry with no config change, as documented. Added the missing og:image
+  block the page-invariants test expects on every page. `pnpm check` green
+  (29 tests); verified live via the dev server, including that all five
+  audio files actually load with correct durations, not just that
+  `<audio>` tags render.
