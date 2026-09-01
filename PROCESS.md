@@ -184,3 +184,17 @@ at the top) with the curated, cited overview before shipping.
   35 airborne frames directly over a monster, then dropped exactly on the
   frame the player landed while still overlapping it. `pnpm check` green
   (21 tests).
+- [`3c1882b`](https://github.com/comp4020-agentic-coding-studio/comp4020-crit5-passionleader/commit/3c1882b):
+  the author asked whether the remaining CC0 assets should be hand-authored
+  instead -- reversing `Plan.md`'s source-first default. Drafted replacements
+  for player/monster/background/gun/SFX in a scratch dir first (delegating
+  SFX synthesis to the peer session), built a review page compositing all of
+  them at true in-game scale, and had the author approve/reject per asset
+  before wiring anything in. Approved: slime, background (sky/hills/ground/
+  plants), the gun (redrawn as vector shapes in `main.ts`, no PNG) and its
+  bullet, and all four SFX. Rejected: the player sprite ("캐릭터 구림" --
+  wants a 2-heads-tall chibi design, human or not) and `bg/tree.png` ("너무
+  허술해 보임"). Only the approved half was wired in and credited; player and
+  tree stay CC0-sourced pending a second attempt. `pnpm check` green
+  (21 tests); verified live via the dev server, not just the review page.
+  Still owe: the character and tree redo.
