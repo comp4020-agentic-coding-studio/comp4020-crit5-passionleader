@@ -27,3 +27,9 @@ export function loseLife(lives: number): number {
 export function isGameOver(lives: number): boolean {
   return lives <= 0;
 }
+
+export const BOSS_HP_MULTIPLIER = 10;
+
+export function bossHp(stageMonsterHp: number): number {
+  return stageMonsterHp * BOSS_HP_MULTIPLIER;
+}

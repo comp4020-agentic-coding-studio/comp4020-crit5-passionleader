@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { applyHit, isGameOver, isMonsterDead, loseLife, MONSTER_MAX_HP } from "../game-rules.ts";
+import { applyHit, bossHp, isGameOver, isMonsterDead, loseLife, MONSTER_MAX_HP } from "../game-rules.ts";
 
 // Crit 5 spec, mechanically checkable slice:
 // - "one rule of the game has a focused automated test" -> the boomerang/gun
@@ -21,6 +21,14 @@ describe("monster damage", () => {
   it("dies in a single gun hit", () => {
     const hp = applyHit(MONSTER_MAX_HP, "gun");
     expect(isMonsterDead(hp)).toBe(true);
+  });
+});
+
+describe("boss scaling", () => {
+  it("gives each stage's boss ten times that stage's regular monster HP", () => {
+    expect(bossHp(MONSTER_MAX_HP)).toBe(20);
+    expect(bossHp(3)).toBe(30);
+    expect(bossHp(4)).toBe(40);
   });
 });
 
