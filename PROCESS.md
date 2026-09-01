@@ -68,3 +68,26 @@ green check is not a substitute for that curation.
 
 Images aren't checked: unlike a citation whose SHA doesn't resolve, a broken
 image is visible the moment this file is rendered on GitHub.
+
+## Working notes (draft — fold into the overview above before shipping)
+
+Raw log, one or two lines per slice, written right after each push. Not the
+deliverable — replace this whole section (and remove the `TEMPLATE:` comment
+at the top) with the curated, cited overview before shipping.
+
+- [`c768321`](https://github.com/comp4020-agentic-coding-studio/comp4020-crit5-passionleader/commit/c768321):
+  named Wonder Boy as the visual/mechanical motif in `CLAUDE.md`/`Plan.md`
+  (mood, not the IP — no copied character art/logos), and wrote in the
+  per-slice rhythm this session runs on: dev server up for every result,
+  re-check against the published crit-5 spec each time, commit+push per
+  slice, a running note here instead of writing `PROCESS.md` once at the end.
+- [`dc389e9`](https://github.com/comp4020-agentic-coding-studio/comp4020-crit5-passionleader/commit/dc389e9):
+  sourced CC0 sprites (player, slime), a jungle background/ground tile, one
+  BGM loop and four SFX from OpenGameArt, trimmed/resized to keep the payload
+  small (~1.1 MB total), credited in `public/assets/CREDITS.md`. Not wired
+  into the game yet — two sessions are splitting this crit (a second,
+  lower-effort session building the minimal playable loop in
+  `main.ts`/`game-rules.ts`; this session sourcing assets, keeping the
+  harness current, and integrating/verifying against the rubric before each
+  push) — worth a line in the final reflection about directing a second
+  agent as part of "how you directed the work."
