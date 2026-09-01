@@ -107,6 +107,16 @@ Confirm that the work is committed and pushed, the checks are green, the
 reflection and process evidence are present, and the live GitHub Pages URL
 loads with its assets and is playable at both desktop and mobile sizes.
 
+## Personal skills
+
+Two personal skills (`~/.claude/skills/`) automate the loop this file
+describes — use them instead of re-deriving the steps by hand:
+
+- **seong-init** — the during-the-week build loop: orient, build, verify,
+  commit/push each slice.
+- **seong-fin** — end-of-week finalize: re-verify, decide done/not-done,
+  mirror to the personal portfolio repo.
+
 ## This file is yours
 
 A starting point, not a rulebook: what you add to it is the harness, and the
