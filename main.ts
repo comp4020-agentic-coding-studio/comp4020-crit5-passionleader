@@ -377,7 +377,12 @@ function update(): void {
       }
     }
 
-    if (monster.alive && now >= invulnerableUntil && overlap(player.x, PLAYER_WIDTH, monster.x, monster.width)) {
+    if (
+      monster.alive &&
+      player.grounded &&
+      now >= invulnerableUntil &&
+      overlap(player.x, PLAYER_WIDTH, monster.x, monster.width)
+    ) {
       takeHit(now);
     }
 
